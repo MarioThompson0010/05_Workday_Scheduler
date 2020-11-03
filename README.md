@@ -12,6 +12,8 @@ To the right of the text area is a save button.  This will save changes to your 
 
 The rows of time are color coded.  The rows that are colored gray are hours that are in the past.  The red background represents the current hour.  Green represents a future hour of the day.
 
+List of technologies used: Javascript, HTML, Bootstrap
+
 Go to application:
 [Link to scheduler](https://mariothompson0010.github.io/05_Workday_Scheduler/Solved/)
 
