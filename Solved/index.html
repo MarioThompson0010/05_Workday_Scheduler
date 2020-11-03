@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Work Day Scheduler</title>
+</head>
+
+<body>
+  <header class="jumbotron">
+    <h1 class="display-3">Work Day Scheduler</h1>
+    <p class="lead">A simple calendar app for scheduling your work day</p>
+    <p id="currentDay" class="lead">
+    </p>
+  </header>
+
+
+
+  <div class="container">
+
+    <!-- Timeblocks go here -->
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+
+    <script src="./script.js"></script>
+
+    <script type="text/javascript">
+
+      // "document.ready" makes sure that our JavaScript doesn't get run until the HTML document is finished loading.
+      $(document).ready(function () {
+        window.addEventListener('resize', reportWindowSize);
+        var currentDate = moment().format('MMMM Do YYYY'); // get the time
+        $("#currentDay").text(currentDate); // display it
+        $("#currentDay").addClass("time-block"); // I don't think this does anything, but maybe it wasn't intended for this control
+        var timeguy = moment().format('YYYY-MM-DD HH'); //get hours
+        var hourmoment = timeguy.substring(11, 13); // get hours as string
+        datekeyguy = timeguy.substring(0, 10); // just the date part, not the hour
+        var inthour = parseInt(hourmoment); // parse into an integer for math
+
+        // nine entries
+        for (var i = 0; i < 9; i++) {
+
+          var saveditems = JSON.parse(localStorage.getItem(datekeyguy + i)); //get text values
+          var blocktime = i + 9; // turn into military time for easy math
+
+          //add row
+          var $rowdiv = $("<div>"); // now row
+          $rowdiv.addClass("row"); // add row class
+
+          //add col
+          var $coldivTime = $("<col>"); // make column
+          $coldivTime.attr("id", "coltime" + i); // column time
+          // take 2 columns, put label at top of cell, push to the right; bootstrap does some padding but I 
+          // don't want it.
+
+          $coldivTime.addClass("col-md-2 d-flex align-items-start d-flex justify-content-end nopadding");
+
+          // add hour
+          var $thehour = $("<label>");
+          $thehour.addClass("hour"); // hour has come
+          $thehour.addClass("d-flex align-items-center"); // vertically middle,
+          $thehour.addClass("d-flex justify-content-end"); // push to the right
+          $thehour.attr("id", "hour" + i); // identify it for future use, if needed
+          var thetime = ""; // perform string operations
+
+          // format the time
+          if (blocktime < 13) {
+            thetime += blocktime;
+            if (thetime == 12) {
+              thetime += "PM";
+            }
+            else {
+              thetime += "AM";
+            }
+          }
+          else {
+            var tempint = blocktime - 12;
+            thetime += tempint;
+            thetime += "PM";
+          }
+
+          $thehour.text(thetime); // put into control
+
+          //add another column
+          var $coldivDescription = $("<col>");
+          $coldivDescription.attr("id", "coldesc" + i); // description column
+          $coldivDescription.addClass("col-sm-12 col-md-8 d-flex align-items-center nopadding");
+
+          //textarea; this is where user will enter text
+          var $txtarea = $("<textarea>");
+          $txtarea.addClass("description"); // add formatting
+          $txtarea.addClass("nopadding");
+
+          // figure out what color to make the textareas
+          if (blocktime < inthour) {
+            $txtarea.addClass("past");
+          }
+          else if (blocktime === inthour) {
+            $txtarea.addClass("present");
+          }
+          else if (blocktime > inthour) {
+            $txtarea.addClass("future");
+          }
+
+          // text area guy
+          $txtarea.attr("id", "textareaguy" + i);
+
+          // if user previously saved text, put it in
+          if (saveditems !== null) {
+            $txtarea.text(saveditems);
+          }
+
+          // add another column
+          // save button
+          var $coldivButton = $("<div>");
+          $coldivButton.attr("id", "colbutton" + i);
+          $coldivButton.addClass("col-sm-12 col-md-2 d-flex align-items-center justify-content-start nopadding");
+
+          // button
+          var $buttonguy = $("<button>");
+          $buttonguy.addClass("d-flex justify-content-center align-items-center saveBtn");
+          $buttonguy.attr("id", "buttonbutton" + i);
+          //str1.padStart(2, '0')
+
+          // add event handler to the click event
+          $buttonguy.on("click", ButtonClickedMethod);
+
+          // image
+          var $imageguy = $("<img>");
+          $imageguy.addClass("imgSize");
+          $imageguy.attr("id", "savebuttonimg" + i);
+          $imageguy.attr("src", "../Assets/save.png");
+          $imageguy.attr("alt", "save");
+
+          // append the time to the column of time
+          $coldivTime.append($thehour);
+          $rowdiv.append($coldivTime);
+
+          // append description column
+          $coldivDescription.append($txtarea);
+          $rowdiv.append($coldivDescription);
+
+          // append button
+          $buttonguy.append($imageguy);
+          $coldivButton.append($buttonguy);
+          $rowdiv.append($coldivButton);
+
+          // show it on the screen
+          $(".container").append($rowdiv);
+
+        }
+      });
+
+    </script>
+  </div>
+
+
+
+</body>
+
+</html>
