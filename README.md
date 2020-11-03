@@ -1,8 +1,8 @@
 # Scheduler
 
 ## Screenshot:
-![Scheduler](https://github.com/MarioThompson0010/05_Work_Day_Scheduler/blob/main/Assets/screenshot.PNG)
-![Same Scheduler](https://github.com/MarioThompson0010/git2/blob/master/homework/05_Work_Day_Scheduler/Assets/screenshot2.PNG)
+![Scheduler](https://github.com/MarioThompson0010/05_Workday_Scheduler/blob/main/Assets/screenshot.PNG)
+![Same Scheduler](https://github.com/MarioThompson0010/05_Workday_Scheduler/blob/main/Assets/screenshot2.PNG)
 
  The date gets displayed at the top of the page, just under the heading.
 
@@ -13,5 +13,5 @@ To the right of the text area is a save button.  This will save changes to your 
 The rows of time are color coded.  The rows that are colored gray are hours that are in the past.  The red background represents the current hour.  Green represents a future hour of the day.
 
 Go to application:
-[Link to scheduler](https://mariothompson0010.github.io/05_Work_Day_Scheduler/Solved/)
+[Link to scheduler](https://mariothompson0010.github.io/05_Workday_Scheduler/Solved/)
 
